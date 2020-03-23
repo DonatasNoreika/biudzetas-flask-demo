@@ -1,6 +1,8 @@
 import os
 from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import DateTime
+from datetime import datetime
 import forms
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -17,6 +19,7 @@ db = SQLAlchemy(app)
 class Irasas(db.Model):
     __tablename__ = "irasas"
     id = db.Column(db.Integer, primary_key=True)
+    data = db.Column("Data", DateTime, default=datetime.now())
     pajamos = db.Column("Pajamos", db.Boolean)
     suma = db.Column("Vardas", db.Integer)
 
@@ -27,7 +30,7 @@ def records():
         visi_irasai = Irasas.query.all()
     except:
         visi_irasai = []
-    return render_template("index.html", visi_irasai=visi_irasai)
+    return render_template("index.html", visi_irasai=visi_irasai, datetime=datetime)
 
 @app.route("/naujas_irasas", methods=["GET", "POST"])
 def new_record():
