@@ -34,11 +34,10 @@ def new_record():
     db.create_all()
     forma = forms.IrasasForm()
     if forma.validate_on_submit():
-        if forma.validate_on_submit():
-            naujas_irasas = Irasas(pajamos=forma.pajamos.data, suma=forma.suma.data)
-            db.session.add(naujas_irasas)
-            db.session.commit()
-            return redirect(url_for('records'))
+        naujas_irasas = Irasas(pajamos=forma.pajamos.data, suma=forma.suma.data)
+        db.session.add(naujas_irasas)
+        db.session.commit()
+        return redirect(url_for('records'))
     return render_template("prideti_irasa.html", form=forma)
 
 
